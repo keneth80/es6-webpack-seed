@@ -16,7 +16,7 @@ export class D3SelectionExample {
         div.append('svg')
             .attr('width', 200)
             .attr('height', 200)
-            .style('background', '#ffff00');
+            .style('background', '#FFFF00');
 
         console.log('div : ', div);
 
