@@ -4,8 +4,6 @@ const path = require('path');
 
 const _root = path.resolve(__dirname, '..');
 
-console.log('_root : ', _root);
-
 function root(args) {
     args = Array.prototype.slice.call(arguments, 0);
 
