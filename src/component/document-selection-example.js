@@ -7,7 +7,7 @@ export class DocumentSelectionExample {
     }
 
     init() {
-        
+        this.selection();
     }
 
     selection() {
