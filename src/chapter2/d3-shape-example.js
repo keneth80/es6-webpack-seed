@@ -1,4 +1,5 @@
 import { select } from 'd3-selection';
+import { line } from 'd3-shape';
 
 export class D3ShapeExample {
     constructor(configuration = {
@@ -26,6 +27,84 @@ export class D3ShapeExample {
     }
 
     draw() {
+        const width = 100;
+        const height = 100;
+        this.svg.append('rect')
+            .attr('class', 'shapes')
+            .attr('x', 10)
+            .attr('y', 10)
+            .attr('width', width)
+            .attr('height', height)
+            .style('stroke', '#000')
+            .style('fill', '#FF00FF');
 
+        this.svg.append('circle')
+            .attr('class', 'shapes')
+            .attr('x', 160)
+            .attr('y', 10)
+            .attr('cx', 160 + width/2)
+            .attr('cy', 10 + width/2)
+            .attr('r', width/2)
+            .style('stroke', '#000')
+            .style('fill', '#FF0000');
+
+        this.svg.append('rect')
+            .attr('class', 'shapes')
+            .attr('x', 300)
+            .attr('y', 10)
+            .attr('width', width)
+            .attr('height', height)
+            .style('stroke', '#000')
+            .style('fill', '#FFFF00');
+        // const rectGroup = this.svg.append('g');
+        // const circleGroup = this.svg.append('g');
+        // const pathGroup = this.svg.append('g');
+
+        const positions = [];
+
+        this.svg.selectAll('.shapes')
+            .each((data, index, nodeList) => {
+                const target = select(nodeList[index]);
+                const nextTarget = nodeList[index + 1];
+                const position = [];
+                position.push({
+                    // x: parseFloat(target.attr('x')),
+                    // y: parseFloat(target.attr('y'))
+                    x: parseFloat(target.attr('x')) + width/2, // width
+                    y: parseFloat(target.attr('y')) + height/2
+                });
+                
+                if (nextTarget) {
+                    position.push({
+                        // x: parseFloat(select(nextTarget).attr('x')),
+                        // y: parseFloat(select(nextTarget).attr('y'))
+                        x: parseFloat(select(nextTarget).attr('x')) + width/2, // not
+                        y: parseFloat(select(nextTarget).attr('y')) + height/2
+                    });
+                }
+                positions.push(position);
+            });
+
+        console.log('positions : ', positions);
+
+        const lineFunction = line()
+            .x((d) => {
+                console.log('d : ', d);
+                return d.x; 
+            })
+            .y((d) => { 
+                return d.y; 
+            });
+
+        this.svg.selectAll('.line').data(positions)
+        .enter()
+            .append('path')
+            .attr('class', 'line')
+            .style('stroke', '#000000')
+            .style('stroke-width', 5)
+            .attr('d', (data) => {
+                console.log('data : ', data);
+                return lineFunction(data);
+            });
     }
 }
