@@ -67,6 +67,8 @@ export class D3ShapeExample {
                 const target = select(nodeList[index]);
                 const nextTarget = nodeList[index + 1];
                 const position = [];
+
+                // from position
                 position.push({
                     // x: parseFloat(target.attr('x')),
                     // y: parseFloat(target.attr('y'))
@@ -74,6 +76,7 @@ export class D3ShapeExample {
                     y: parseFloat(target.attr('y')) + height/2
                 });
                 
+                // to position
                 if (nextTarget) {
                     position.push({
                         // x: parseFloat(select(nextTarget).attr('x')),
@@ -85,11 +88,8 @@ export class D3ShapeExample {
                 positions.push(position);
             });
 
-        console.log('positions : ', positions);
-
         const lineFunction = line()
             .x((d) => {
-                console.log('d : ', d);
                 return d.x; 
             })
             .y((d) => { 
@@ -103,7 +103,6 @@ export class D3ShapeExample {
             .style('stroke', '#000000')
             .style('stroke-width', 5)
             .attr('d', (data) => {
-                console.log('data : ', data);
                 return lineFunction(data);
             });
     }
