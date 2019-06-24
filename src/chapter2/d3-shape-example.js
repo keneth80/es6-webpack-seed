@@ -56,9 +56,8 @@ export class D3ShapeExample {
             .attr('height', height)
             .style('stroke', '#000')
             .style('fill', '#FFFF00');
-        // const rectGroup = this.svg.append('g');
-        // const circleGroup = this.svg.append('g');
-        // const pathGroup = this.svg.append('g');
+        // const geometryGroup = this.svg.append('g');
+        // const lineGroup = this.svg.append('g');
 
         const positions = [];
 
