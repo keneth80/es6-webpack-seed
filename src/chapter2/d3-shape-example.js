@@ -30,10 +30,10 @@ export class D3ShapeExample {
 
     draw() {
         // 도형 group
-        const geometryGroup = this.svg.append('g');
+        const geometryGroup = this.svg.append('g').attr('class', 'geometry-group');
 
         // line group
-        const lineGroup = this.svg.append('g');
+        const lineGroup = this.svg.append('g').attr('line-group');
 
         geometryGroup.selectAll('.shape-rect').data(this.data).enter()
             .append('rect')
