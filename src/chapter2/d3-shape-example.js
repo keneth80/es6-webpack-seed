@@ -3,62 +3,48 @@ import { line } from 'd3-shape';
 
 export class D3ShapeExample {
     constructor(configuration = {
-        selector
+        selector,
+        data
     }) {
         this.svg = null;
         this.svgWidth = 0;
         this.svgHeight = 0;
         this.selector = configuration.selector;
-        console.log(this.text);
+        this.data = configuration.data;
         this.init();
         this.draw();
     }
 
     init() {
+        //svg create
         this.svg = select(this.selector)
             .append('svg')
                 .attr('width', '100%')
                 .attr('height', 350)
                 .style('background', '#cccccc');
+        
+        // svg size check
         this.svgWidth = parseFloat(this.svg.style('width'));
         this.svgHeight = parseFloat(this.svg.style('height'));
-
-        console.log('svg : ', this.svgWidth, this.svgHeight);
     }
 
     draw() {
-        const width = 100;
-        const height = 100;
-        this.svg.append('rect')
-            .attr('class', 'shapes')
-            .attr('x', 10)
-            .attr('y', 10)
-            .attr('width', width)
-            .attr('height', height)
-            .style('stroke', '#000')
-            .style('fill', '#FF00FF');
+        // 도형 group
+        const geometryGroup = this.svg.append('g');
 
-        this.svg.append('circle')
-            .attr('class', 'shapes')
-            .attr('x', 160)
-            .attr('y', 10)
-            .attr('cx', 160 + width/2)
-            .attr('cy', 10 + width/2)
-            .attr('r', width/2)
-            .style('stroke', '#000')
-            .style('fill', '#FF0000');
+        // line group
+        const lineGroup = this.svg.append('g');
 
-        this.svg.append('rect')
-            .attr('class', 'shapes')
-            .attr('x', 300)
-            .attr('y', 10)
-            .attr('width', width)
-            .attr('height', height)
-            .style('stroke', '#000')
-            .style('fill', '#FFFF00');
-        // const geometryGroup = this.svg.append('g');
-        // const lineGroup = this.svg.append('g');
-
+        geometryGroup.selectAll('.shapes').data(this.data).enter()
+            .append('rect')
+                .attr('class', 'shapes')
+                .attr('x', (d, i) => 10 + (50 * i) + (d.size.width * i))
+                .attr('y', 10)
+                .attr('width', (d) => d.size.width)
+                .attr('height', (d) => d.size.height)
+                .style('stroke', '#000')
+                .style('fill', '#FF00FF');
+        
         const positions = [];
 
         this.svg.selectAll('.shapes')
@@ -71,8 +57,8 @@ export class D3ShapeExample {
                 position.push({
                     // x: parseFloat(target.attr('x')),
                     // y: parseFloat(target.attr('y'))
-                    x: parseFloat(target.attr('x')) + width/2, // width
-                    y: parseFloat(target.attr('y')) + height/2
+                    x: parseFloat(target.attr('x')) + data.size.width/2, // width
+                    y: parseFloat(target.attr('y')) + data.size.height/2
                 });
                 
                 // to position
@@ -80,12 +66,14 @@ export class D3ShapeExample {
                     position.push({
                         // x: parseFloat(select(nextTarget).attr('x')),
                         // y: parseFloat(select(nextTarget).attr('y'))
-                        x: parseFloat(select(nextTarget).attr('x')) + width/2, // not
-                        y: parseFloat(select(nextTarget).attr('y')) + height/2
+                        x: parseFloat(select(nextTarget).attr('x')) + data.size.width/2, // not
+                        y: parseFloat(select(nextTarget).attr('y')) + data.size.height/2
                     });
                 }
                 positions.push(position);
             });
+
+        console.log('positions : ', positions);
 
         const lineFunction = line()
             .x((d) => {
@@ -95,14 +83,13 @@ export class D3ShapeExample {
                 return d.y; 
             });
 
-        this.svg.selectAll('.line').data(positions)
-        .enter()
+        lineGroup.selectAll('.line').data(positions).enter()
             .append('path')
-            .attr('class', 'line')
-            .style('stroke', '#000000')
-            .style('stroke-width', 5)
-            .attr('d', (data) => {
-                return lineFunction(data);
-            });
+                .attr('class', 'line')
+                .style('stroke', '#000000')
+                .style('stroke-width', 5)
+                .attr('d', (data) => {
+                    return lineFunction(data);
+                });
     }
 }
