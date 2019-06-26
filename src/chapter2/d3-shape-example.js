@@ -38,6 +38,7 @@ export class D3ShapeExample {
         geometryGroup.selectAll('.shape-rect').data(this.data).enter()
             .append('rect')
                 .attr('class', 'shape-rect')
+                .attr('id', (d) => d.id)
                 .attr('x', (d, i) => 10 + (50 * i) + (d.size.width * i))
                 .attr('y', 10)
                 .attr('width', (d) => d.size.width)
