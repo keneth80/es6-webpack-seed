@@ -11,21 +11,21 @@ const excute = () => {
                 width: 100,
                 height: 100
             },
-            text: '1'
+            id: '1'
         },
         {
             size: {
                 width: 100,
                 height: 100
             },
-            text: '2'
+            id: '2'
         },
         {
             size: {
                 width: 100,
                 height: 100
             },
-            text: '3'
+            id: '3'
         }
     ]
     const d3ShapeExample = new D3ShapeExample({selector: '#result', data: shapeList});

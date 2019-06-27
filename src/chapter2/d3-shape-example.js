@@ -30,14 +30,15 @@ export class D3ShapeExample {
 
     draw() {
         // 도형 group
-        const geometryGroup = this.svg.append('g');
+        const geometryGroup = this.svg.append('g').attr('class', 'geometry-group');
 
         // line group
-        const lineGroup = this.svg.append('g');
+        const lineGroup = this.svg.append('g').attr('line-group');
 
-        geometryGroup.selectAll('.shapes').data(this.data).enter()
+        geometryGroup.selectAll('.shape-rect').data(this.data).enter()
             .append('rect')
-                .attr('class', 'shapes')
+                .attr('class', 'shape-rect')
+                .attr('id', (d) => d.id)
                 .attr('x', (d, i) => 10 + (50 * i) + (d.size.width * i))
                 .attr('y', 10)
                 .attr('width', (d) => d.size.width)
@@ -47,7 +48,7 @@ export class D3ShapeExample {
         
         const positions = [];
 
-        this.svg.selectAll('.shapes')
+        this.svg.selectAll('.shape-rect')
             .each((data, index, nodeList) => {
                 const target = select(nodeList[index]);
                 const nextTarget = nodeList[index + 1];
@@ -63,11 +64,12 @@ export class D3ShapeExample {
                 
                 // to position
                 if (nextTarget) {
+                    const nextTargetSelection = select(nextTarget);
                     position.push({
-                        // x: parseFloat(select(nextTarget).attr('x')),
-                        // y: parseFloat(select(nextTarget).attr('y'))
-                        x: parseFloat(select(nextTarget).attr('x')) + data.size.width/2, // not
-                        y: parseFloat(select(nextTarget).attr('y')) + data.size.height/2
+                        // x: parseFloat(nextTargetSelection.attr('x')),
+                        // y: parseFloat(nextTargetSelection.attr('y'))
+                        x: parseFloat(nextTargetSelection.attr('x')) + data.size.width/2, // not
+                        y: parseFloat(nextTargetSelection.attr('y')) + data.size.height/2
                     });
                 }
                 positions.push(position);
