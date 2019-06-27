@@ -11,6 +11,10 @@ const excute = () => {
                 width: 100,
                 height: 100
             },
+            position: {
+                x: 10,
+                y: 10
+            },
             id: '1'
         },
         {
@@ -18,12 +22,20 @@ const excute = () => {
                 width: 100,
                 height: 100
             },
+            position: {
+                x: 150,
+                y: 10
+            },
             id: '2'
         },
         {
             size: {
                 width: 100,
                 height: 100
+            },
+            position: {
+                x: 290,
+                y: 10
             },
             id: '3'
         }
