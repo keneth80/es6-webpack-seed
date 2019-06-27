@@ -73,8 +73,6 @@ export class D3ShapeExample {
                 positions.push(position);
             });
 
-        console.log('positions : ', positions);
-
         const lineFunction = line()
             .x((d) => {
                 return d.x; 
