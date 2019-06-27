@@ -33,7 +33,7 @@ export class D3ShapeExample {
         const geometryGroup = this.svg.append('g').attr('class', 'geometry-group');
 
         // line group
-        const lineGroup = this.svg.append('g').attr('line-group');
+        const lineGroup = this.svg.append('g').attr('class', 'line-group');
 
         geometryGroup.selectAll('.shape-rect').data(this.data).enter()
             .append('rect')
@@ -48,7 +48,7 @@ export class D3ShapeExample {
         
         const positions = [];
 
-        this.svg.selectAll('.shape-rect')
+        geometryGroup.selectAll('.shape-rect')
             .each((data, index, nodeList) => {
                 const target = select(nodeList[index]);
                 const nextTarget = nodeList[index + 1];
